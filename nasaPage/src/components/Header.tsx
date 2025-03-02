@@ -1,31 +1,20 @@
-import { Link } from "react-router";
 import { routes } from "../constants/routes";
+import "../index.css";
+import VariantButtonGroup from "./GroupedButtons";
 
 export const Header = () => {
     return (
-        <header>
+        <header >
             <h1>NASA EXPLORER</h1>
             <nav>
-                <ul>
-                    <li>
-                        <Link to={routes.HOME}>Home</Link>
-                    </li>
-                    <li>
-                        <Link to={routes.APOD}>APOD</Link>
-                    </li>
-                    <li>
-                        <Link to={routes.MARS_ROVER}>Mars Rover</Link>
-                    </li>
-                    <li>
-                        <Link to={routes.NEO}>Near Earth Objects</Link>
-                    </li>
-                    <li>
-                        <Link to={routes.EARTH_IMAGERY}>Earth Imagery</Link>
-                    </li>
-                    <li>
-                        <Link to={routes.DETAILS}>Details</Link>
-                    </li>
-                </ul>
+            <VariantButtonGroup 
+            path1={routes.HOME} buttonMessage1='Home'
+            path2={routes.APOD} buttonMessage2='APOD' 
+            path3={routes.MARS_ROVER} buttonMessage3='Mars Rover Photos' 
+            path4={routes.NEO} buttonMessage4='NEO'
+            path5={routes.EARTH_IMAGERY} buttonMessage5='Earth Imagery'
+            />
+            <button>Dark Theme</button>
             </nav>
         </header>
     );

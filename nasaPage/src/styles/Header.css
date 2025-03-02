@@ -1,0 +1,14 @@
+header{
+    align-items: center;
+    text-align: center;
+    padding: 1rem 2rem;
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 2;
+}
+.layout-container{
+    background-image: radial-gradient(rgb(0, 0, 0) 10%,rgb(32, 32, 32) 100%);
+}
