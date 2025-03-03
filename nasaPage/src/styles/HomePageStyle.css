@@ -298,4 +298,10 @@
 .layout-container-light .circle{
   background-image: radial-gradient(farthest-corner at 160px 140px, rgb(164, 158, 158) 50%,rgb(255, 255, 255) 100%);
 }
+.layout-container-light .rocket{
+  background: black;
+}
+.layout-container-light .rocket .window{
+  border: black;
+}
 

@@ -36,7 +36,7 @@ export const Header = () => {
                     path5={routes.EARTH_IMAGERY} buttonMessage5="Earth Imagery"
                 />
                 <button onClick={toggleTheme} className="toggle-theme">
-                    Toggle Theme
+                    {theme === "dark" ? "Light 🌞" : "Dark 🌜"}
                 </button>
             </nav>
         </header>
