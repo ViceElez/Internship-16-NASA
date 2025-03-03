@@ -8,7 +8,7 @@
     overflow: hidden;
 }
 .circle{
-   background-image: radial-gradient(farthest-corner at 160px 140px, black 50%,rgb(41, 41, 41) 100%);
+   background-image: radial-gradient(farthest-corner at 160px 140px, rgb(28, 27, 27) 50%,rgb(41, 41, 41) 100%);
     border-radius: 50%;
     position: fixed;
     z-index: 1;
@@ -287,5 +287,15 @@
     to {
         transform: rotate(360deg);
     }
+}
+.planet img{
+  width: 135%;
+  height: 135%;
+  transform: translate(-12%, -13%);
+  object-fit: cover;
+  border-radius: 50%;
+}
+.layout-container-light .circle{
+  background-image: radial-gradient(farthest-corner at 160px 140px, rgb(164, 158, 158) 50%,rgb(255, 255, 255) 100%);
 }
 

@@ -9,6 +9,38 @@ header{
     position: relative;
     z-index: 2;
 }
-.layout-container{
+.layout-container-dark{
     background-image: radial-gradient(rgb(0, 0, 0) 10%,rgb(32, 32, 32) 100%);
+}
+
+.layout-container-light{
+    background-image: radial-gradient(rgb(143, 128, 128) 10%,rgb(255, 255, 255) 100%);
+    color: black;
+}
+.layout-container-light p{
+    color: black;
+}
+.layout-container-light h1{
+    color: black;
+}
+.toggle-theme{
+    color : black;
+    background-color: rgb(25, 118, 210);
+    border-radius: 10px;
+    padding: 7px;
+    border: none;
+}
+.toggle-theme:hover{
+    background-color: white;
+    color: black;
+    cursor: pointer;
+}
+
+.layout-container-light .toggle-theme{
+    color: white;
+}
+
+.layout-container-light .toggle-theme:hover{
+    background-color: black;
+    color: white;
 }

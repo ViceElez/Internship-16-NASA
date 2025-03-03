@@ -18,7 +18,9 @@ export const HomePage = () => {
                     With a simple and intuitive interface, NASA Explorer makes it easy to explore the cosmos, learn about celestial objects, and stay up to date with the latest NASA discoveries. Dive in and start your journey through space today!
                 </p>
                 <div className='orbit'>
-                    <div className='planet'></div>
+                    <div className='planet'>
+                        <img src={images.earth} alt='planet' />
+                    </div>
                     <div className='rocket'>
                      <div className="window"></div>
                     </div>

@@ -5,7 +5,7 @@ import '../index.css'
 
 export const Layout = () => {
     return (
-      <div className="layout-container">
+      <div className="layout-container-dark" id="layout">
         <Fragment>
             <Header/>
 
