@@ -29,9 +29,6 @@
     display: flex; 
     flex-direction: column;
 }
-.apod-info{
-    transform: translateY(20px);
-}
 .apod-image{
     margin: auto;
 }
@@ -55,4 +52,67 @@
     font-size: 40px;
     cursor: pointer;
 }
+.date-search{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+    z-index: 2;
+}
+.date-search input{
+    padding: 0.5rem;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    margin-top: -3px;
+}
 
+.layout-container-dark .date-search input{
+    background-color: white(0, 0, 0, 0.5);
+    color: black;
+}
+.layout-container-dark .date-search label{
+    color: white;
+}
+.layout-container-light .date-search input{
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+}
+.layout-container-light .date-search label{
+    color: black;
+}
+.date-search button{
+    padding: 0.5rem;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+.date-search button:hover{
+    background-color: #0056b3;
+}
+.layout-container-dark .date-search button:hover{
+    background-color: white;
+    color: black;
+}
+
+.layout-container-light .date-search button:hover{
+    background-color: black;
+    color: white;
+}
+
+.no-data{
+    text-align: center;
+    margin-top: 80px;
+    z-index: 2;
+    font-size: 1.8rem;
+}
+
+.layout-container-dark .no-data{
+    color: white;
+}
+.layout-container-light .no-data{
+    color: black;
+}

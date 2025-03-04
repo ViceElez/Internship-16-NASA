@@ -9,11 +9,6 @@ export async function getAPODData() {
 
     const url = `https://api.nasa.gov/planetary/apod?api_key=${api}&start_date=${startDateFormatted}&end_date=${todayDateFormatted}`.replace(/\s+/g, '');
 
-
-    console.log(startDateFormatted);
-    console.log(todayDateFormatted);
-    console.log(`API KEY: ${url}`);
-
     fetch(`${url}`)
     .then((response) => response.json())  
     .then((data) => localStorage.setItem('apodData', JSON.stringify(data)))    

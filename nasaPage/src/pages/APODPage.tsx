@@ -1,10 +1,9 @@
 import { useLocation } from 'react-router-dom';
 import '../index.css';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import '../styles/ApodPageStyle.css';
 import { getAPODData } from '../services/index';
 import { APOD } from '../components/index';
-
 
 interface ApodData {
     copyRight?: string;
@@ -16,31 +15,75 @@ interface ApodData {
 
 export const APODPage = () => {
     const currentLocation = useLocation();
+    const [startDate, setStartDate] = useState('');
+    const [endDate, setEndDate] = useState('');
+    const [filteredData, setFilteredData] = useState<ApodData[]>([]);
 
     useEffect(() => {
-        const pageLocationsWithScroll=["/apod", "/mars-rover", "/neo", "/earth-imagery"];
-
-        if (pageLocationsWithScroll.includes(currentLocation.pathname)) {
-            document.body.style.overflow = "auto"; 
-        } else {
-            document.body.style.overflow = "hidden";
-        }
+        const pageLocationsWithScroll = ["/apod", "/mars-rover", "/neo", "/earth-imagery"];
+        document.body.style.overflow = pageLocationsWithScroll.includes(currentLocation.pathname) ? "auto" : "hidden";
     }, [currentLocation]);
 
-    getAPODData();
+    useEffect(() => {
+        getAPODData();
+    }, []);
 
-    const apodData = JSON.parse(localStorage.getItem('apodData') || '{}');
-    console.log(apodData);
+    useEffect(() => {
+        const storedData: ApodData[] = JSON.parse(localStorage.getItem('apodData') || '[]');
+        
+        const filtered = storedData.filter((data) => {
+            const dataDate = new Date(data.date).toISOString().split('T')[0]; 
+            return (!startDate || dataDate >= startDate) && (!endDate || dataDate <= endDate);
+        });
 
+        setFilteredData(filtered);
+    }, [startDate, endDate]);
+
+    const handleStartDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const newStartDate = e.target.value;
+        setStartDate(newStartDate);
+
+        if (endDate && newStartDate > endDate) {
+            setEndDate(newStartDate);
+        }
+    };
+
+    const handleEndDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const newEndDate = e.target.value;
+        setEndDate(newEndDate);
+
+        if (startDate && newEndDate < startDate) {
+            setStartDate(newEndDate);
+        }
+    };
 
     return (
        <div className="apod-page-content">
+            <div className='date-search'>
+                <label htmlFor="dateStart">From</label>
+                <input 
+                type="date" 
+                id='dateStart' 
+                value={startDate} 
+                min="2020-01-01" 
+                max={new Date().toISOString().split('T')[0]}  
+                onChange={handleStartDateChange} />
+                <label htmlFor="dateEnd">To</label>
+                <input 
+                type="date" 
+                id='dateEnd' 
+                value={endDate} 
+                min="2020-01-01" 
+                max={new Date().toISOString().split('T')[0]}  
+                onChange={handleEndDateChange} />
+            </div>
+            {filteredData.length === 0 && <p className='no-data'>No APOD found</p>}
             <div className='apod-container'>
-                {apodData.map((data: ApodData) => (
+                {filteredData.map((data) => (
                     <APOD 
-                    key={data.date} 
-                    title={data.title}
-                    urlImage={data.url}
+                        key={data.date} 
+                        title={data.title}
+                        urlImage={data.url}
                     />
                 ))}
             </div>
@@ -51,5 +94,5 @@ export const APODPage = () => {
                 <div className='circle circle-4'></div>
             </div>
        </div>
-    )
-}
+    );
+}; //neki loader dodat za ovo fethcanje jer ako odma iden na apod pise no data 
