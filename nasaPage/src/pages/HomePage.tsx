@@ -1,7 +1,21 @@
 import '../index.css';
 import images from '../assets/images/images.ts';
+import { useLocation } from 'react-router';
+import { useEffect } from 'react';
 
 export const HomePage = () => {
+    const currentLocation = useLocation();
+
+    useEffect(() => {
+        const pageLocationsWithScroll=["/apod", "/mars-rover", "/neo", "/earth-imagery"];
+
+        if (pageLocationsWithScroll.includes(currentLocation.pathname)) {
+            document.body.style.overflow = "auto"; 
+        } else {
+            document.body.style.overflow = "hidden";
+        }
+    }, [currentLocation]);
+
     return (    
         <div>
             <div className="home-page-content">
@@ -26,7 +40,7 @@ export const HomePage = () => {
                     </div>
                 </div>
             </div>
-            <div className="home-page-container">
+            <div className="circle-container">
                 <div className='circle circle-1'></div>
                 <div className='circle circle-2'></div>
                 <div className='circle circle-3'></div>

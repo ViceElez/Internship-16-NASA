@@ -1,11 +1,10 @@
-.home-page-container{
+.circle-container{
     width: 100%;
     min-height: 100vh;
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
 }
 .circle{
    background-image: radial-gradient(farthest-corner at 160px 140px, rgb(28, 27, 27) 50%,rgb(41, 41, 41) 100%);
@@ -304,4 +303,5 @@
 .layout-container-light .rocket .window{
   border: black;
 }
+
 

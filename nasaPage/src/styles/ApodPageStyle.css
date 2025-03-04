@@ -3,8 +3,13 @@
     min-height: 100vh;
     position: relative;
     display: flex;
-    overflow: hidden;
-}
-.apod-page-info{
+}  
+.layout-container-dark .apod-card{
     color: white;
-}   
+}
+.layout-container-light .apod-card {
+    color: black;
+}
+.apod-container{
+    z-index: 2;
+}
