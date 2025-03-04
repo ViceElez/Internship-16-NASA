@@ -1,0 +1,10 @@
+.neo-page-content{
+    width: 100%;
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    overflow: hidden;
+}
+.neo-page-info{
+    color: white;
+}

@@ -2,6 +2,10 @@
 
 @import url('./styles/HomePageStyle.css');
 @import url('./styles/Header.css');
+@import url('./styles/ApodPageStyle.css');
+@import url('./styles/MarsRoverPageStyle.css');
+@import url('./styles/NEOPageStlye.css');
+@import url('./styles/EarthImageryPageStyle.css');
 
 :root{
     font-family: 'Poppins', sans-serif;

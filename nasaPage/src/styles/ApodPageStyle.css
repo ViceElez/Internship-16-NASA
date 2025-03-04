@@ -1,0 +1,10 @@
+.apod-page-content {
+    width: 100%;
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    overflow: hidden;
+}
+.apod-page-info{
+    color: white;
+}   
