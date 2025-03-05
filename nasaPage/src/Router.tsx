@@ -1,10 +1,12 @@
 import { BrowserRouter, Route, Routes } from "react-router";
 import {routes} from './constants/routes';
-import { APODPage, DetailsPage, EarthImageryPage, HomePage, Layout, MarsRoverPage, NEOPage } from "./pages/index";
+import { APODDetailPage, APODPage, EarthImageryPage, HomePage, Layout, MarsRoverDetailPage, MarsRoverPage, NEOPage } from "./pages/index";
+import {ScrollToTop} from './components/index';
 
 export const Router=()=>{
     return(
         <BrowserRouter>
+        <ScrollToTop/>
             <Routes>
                 <Route element={<Layout/>}>
                     <Route path={routes.HOME} element={<HomePage/>}/>
@@ -12,7 +14,8 @@ export const Router=()=>{
                     <Route path={routes.MARS_ROVER} element={<MarsRoverPage/>}/>
                     <Route path={routes.NEO} element={<NEOPage/>}/>
                     <Route path={routes.EARTH_IMAGERY} element={<EarthImageryPage/>}/>
-                    <Route path={routes.DETAILS} element={<DetailsPage/>}/>
+                    <Route path={routes.APOD_DETAILS} element={<APODDetailPage/>}/>
+                    <Route path={routes.MARS_ROVER_DETAILS} element={<MarsRoverDetailPage/>}/>
                 </Route>
             </Routes>
         </BrowserRouter>

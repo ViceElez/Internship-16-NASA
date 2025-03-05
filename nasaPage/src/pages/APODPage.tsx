@@ -6,7 +6,7 @@ import { getAPODData } from '../services/index';
 import { APOD } from '../components/index';
 
 interface ApodData {
-    copyRight?: string;
+    copyright?: string;
     date: string;
     explanation: string;
     title: string;
@@ -82,6 +82,7 @@ export const APODPage = () => {
                 {filteredData.map((data) => (
                     <APOD 
                         key={data.date} 
+                        date={data.date}
                         title={data.title}
                         urlImage={data.url}
                     />
@@ -95,4 +96,6 @@ export const APODPage = () => {
             </div>
        </div>
     );
-}; //neki loader dodat za ovo fethcanje jer ako odma iden na apod pise no data 
+}; //neki loader dodat za ovo fethcanje jer ako odma iden na apod 
+// pise no data 
+//infinite scroll

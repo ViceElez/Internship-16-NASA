@@ -8,7 +8,6 @@ export async function getAPODData() {
     const startDateFormatted= `${startDate.getFullYear()}-${String(startDate.getMonth() + 1).padStart(2, '0')}-${String(startDate.getDate()).padStart(2, '0')}`;
 
     const url = `https://api.nasa.gov/planetary/apod?api_key=${api}&start_date=${startDateFormatted}&end_date=${todayDateFormatted}`.replace(/\s+/g, '');
-
     fetch(`${url}`)
     .then((response) => response.json())  
     .then((data) => localStorage.setItem('apodData', JSON.stringify(data)))    

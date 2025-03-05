@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import '../index.css';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router';
 
-export const APOD = ({ title, urlImage }: { title: string, urlImage: string }) => {
+export const APOD = ({ date,title, urlImage }: {date:string, title: string, urlImage: string }) => {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
@@ -31,15 +32,17 @@ export const APOD = ({ title, urlImage }: { title: string, urlImage: string }) =
                 {isOpen ? '-' : '+'}
             </motion.button>
             {isOpen && (
-                <motion.div
-                    layout
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.7 }}
-                    className="apod-image"
-                >
-                    <img src={urlImage} alt={title} />
-                </motion.div>
+                    <motion.div
+                        layout
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.7 }}
+                        className="apod-image"
+                    >
+                    <Link to={`/apod-details/${date}`} className='apod-link'>
+                        <img src={urlImage} alt={title} />
+                    </Link>
+                    </motion.div>
             )}
         </motion.div>
     );

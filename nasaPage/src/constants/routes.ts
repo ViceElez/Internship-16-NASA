@@ -8,5 +8,6 @@ export const routes:Routes={
     MARS_ROVER : '/mars-rover',
     NEO: '/neo',
     EARTH_IMAGERY: '/earth-imagery',
-    DETAILS: '/details'
+    APOD_DETAILS: '/apod-details/:date',
+    MARS_ROVER_DETAILS: '/mars-rover-details/:id'
 }

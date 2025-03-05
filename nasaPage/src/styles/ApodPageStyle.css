@@ -116,3 +116,13 @@
 .layout-container-light .no-data{
     color: black;
 }
+
+.apod-link{
+    text-decoration: none;
+}
+.layout-container-dark .apod-link{
+    color: white;
+}
+.layout-container-light .apod-link{
+    color: black;
+}

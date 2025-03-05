@@ -1,0 +1,33 @@
+.apod-detail-container{
+    display: flex;
+    width: 80%;
+    min-height: 90vh;
+    margin: auto;
+    position: relative;
+    margin-top: 40px;
+    z-index: 2;
+}
+.apod-detail-image{
+    width: 50%;
+}
+.apod-detail-info{
+    width: 50%;
+}
+.apod-detail-image img{
+    width:75%;
+    max-height: 400px;
+    display: block;
+    margin: auto;
+    margin-top: 20px;
+}
+.layout-container-dark .apod-detail-container{
+    color: white;
+}
+.layout-container-light .apod-detail-image h6{
+    color: black;
+}
+.apod-detail-image h6{
+    font-size: 0.8rem;
+    text-align: center;
+    margin-top: 10px;
+}
