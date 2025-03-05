@@ -5,6 +5,33 @@
     display: flex;
     overflow: hidden;
 }
-.mars-page-info{
-    color: white;
+
+.mars-rover-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 20px;
+    z-index: 2;
+    padding: 20px;
+    margin-left:100px;
+}
+
+.mars-rover-card {
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    width: calc(33.333% - 20px); 
+    box-sizing: border-box; 
+    width: 30%;
+}
+
+.mars-rover-card img {
+    width: 100%;
+    border-radius: 10px;
+    max-height: 500px;
+    display: block;
+    margin: auto;
 }

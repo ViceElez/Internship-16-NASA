@@ -1,9 +1,19 @@
 import { useLocation } from 'react-router-dom';
 import '../index.css'
-import { useEffect } from 'react';
+import { use, useEffect, useState } from 'react';
+import { getMarsRoverData } from '../services/index';
+import { MarsRover } from '../components';
+
+
+interface MarsRoverData {
+    id: number;
+    img_src: string;
+}
 
 export const MarsRoverPage = () => {
     const currentLocation = useLocation();
+    const [page,setPage] = useState(1);
+    const [photos, setPhotos] = useState<MarsRoverData[]>([]);
 
     useEffect(() => {
         const pageLocationsWithScroll=["/apod", "/mars-rover", "/neo", "/earth-imagery"];
@@ -15,11 +25,25 @@ export const MarsRoverPage = () => {
         }
     }, [currentLocation]);
 
+        useEffect(() => {
+            const fetchData = async () => {
+                const data = await getMarsRoverData(page);
+                setPhotos(data); 
+            };
+            fetchData();
+        }, [page]);
+
+
     return(
         <div className="mars-page-content">
-            <p className='mars-page-info'>
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Laudantium, explicabo sed repellat perspiciatis sit ducimus dolores nostrum ut aliquam quaerat quos eaque soluta magnam itaque recusandae laborum perferendis fuga sint?
-            </p>
+            <div className='mars-rover-list'>
+                {photos.map((data)=>(
+                    <MarsRover
+                        key={data.id}
+                        image={data.img_src}
+                    />
+                ))}
+            </div>
             <div className="circle-container">
                 <div className='circle circle-1'></div>
                 <div className='circle circle-2'></div>
