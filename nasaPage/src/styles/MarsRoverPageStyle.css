@@ -1,9 +1,12 @@
-.mars-page-content {
+.mars-page{
     width: 100%;
-    min-height: 100vh;
     position: relative;
     display: flex;
-    overflow: hidden;
+    flex-direction: column;
+}
+
+.mars-page-content {
+    display: flex;
 }
 
 .mars-rover-list {
@@ -14,7 +17,8 @@
     margin-top: 20px;
     z-index: 2;
     padding: 20px;
-    margin-left:100px;
+    width: 80%;
+    margin: auto;
 }
 
 .mars-rover-card {
@@ -35,3 +39,38 @@
     display: block;
     margin: auto;
 }
+.mars-page footer{
+    text-align: center;
+    align-self: center;
+    display: flex;
+    gap: 20px;
+    z-index: 2;
+}
+.mars-page footer button{
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    z-index: 2;
+}
+.mars-page footer button:disabled{
+    cursor: not-allowed;
+}
+.layout-container-dark footer button{
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);   
+}
+.layout-container-dark footer button:hover{
+    background-color: rgba(32, 31, 31, 0.7);
+}
+.layout-container-dark footer button:disabled{
+    background-color: rgba(156, 152, 152, 0.3);
+}
+.mars-page nav{
+    align-self: flex-end;
+    transform: translateX(-50px);
+    display: flex;
+    gap: 10px;
+}
+
+
