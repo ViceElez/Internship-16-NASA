@@ -59,6 +59,12 @@ export const APODPage = () => {
 
     return (
        <div className="apod-page-content">
+          <div className="circle-container">
+                <div className='circle circle-1'></div>
+                <div className='circle circle-2'></div>
+                <div className='circle circle-3'></div>
+                <div className='circle circle-4'></div>
+            </div>
             <div className='date-search'>
                 <label htmlFor="dateStart">From</label>
                 <input 
@@ -87,12 +93,6 @@ export const APODPage = () => {
                         urlImage={data.url}
                     />
                 ))}
-            </div>
-            <div className="circle-container">
-                <div className='circle circle-1'></div>
-                <div className='circle circle-2'></div>
-                <div className='circle circle-3'></div>
-                <div className='circle circle-4'></div>
             </div>
        </div>
     );

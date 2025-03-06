@@ -31,6 +31,11 @@
     box-sizing: border-box; 
     width: 30%;
 }
+.mars-rover-card:hover{
+    background-color: rgba(0, 0, 0, 0.7);
+    cursor: pointer;
+    transform: scale(1.05);
+}
 
 .mars-rover-card img {
     width: 100%;
@@ -51,6 +56,8 @@
     border-radius: 10px;
     border: none;
     cursor: pointer;
+    margin-top: 20px;
+    margin-bottom: 40px;
     z-index: 2;
 }
 .mars-page footer button:disabled{
@@ -72,5 +79,49 @@
     display: flex;
     gap: 10px;
 }
+.mars-page span{
+    margin-top: 6px;
+}
+select{
+    appearance: none;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    outline: none;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+select:hover{
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+.layout-container-dark select{
+    background-color: rgba(47, 46, 46, 0.5);
+    color: white;
+}
+.layout-container-dark select:hover{
+    background-color: rgba(0, 0, 0, 0.3);
+}
+.layout-container-dark span{
+    color: white;
+}
+.layout-container-light select{
+    background-color: rgba(0, 0, 0, 0.1);
+    color: black;
+}
+.layout-container-light select:hover{
+    background-color: rgba(0, 0, 0, 0.2);
+}
+.layout-container-light span{
+    color: black;
+}
+.layout-container-dark .mars-rover-card{
+    background-color: rgba(47, 46, 46, 0.5);
+}
+
+.mars-rover-link{
+    margin: auto;
+}
+
 
 

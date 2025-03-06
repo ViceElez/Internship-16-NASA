@@ -17,7 +17,7 @@ export const HomePage = () => {
     }, [currentLocation]);
 
     return (    
-        <div>
+        <div className='home-page'>
             <div className="home-page-content">
                 <p className='home-page-info'>
                     Welcome to NASA Explorer, your gateway to the wonders of space! Using cutting-edge data from NASA’s open APIs, this app brings you the latest astronomical discoveries, breathtaking space imagery, and real-time insights from the cosmos. Whether you're a space enthusiast, a student, or just curious about the universe, NASA Explorer offers a front-row seat to the mysteries of space—right at your fingertips.

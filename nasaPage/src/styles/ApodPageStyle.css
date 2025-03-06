@@ -6,6 +6,7 @@
     flex-direction: column;
 }  
 .layout-container-dark .apod-card{
+    background-color: rgba(47, 46, 46, 0.5);
     color: white;
 }
 .layout-container-light .apod-card {
@@ -19,7 +20,7 @@
     align-items: center;
     padding: 1rem;
     gap: 10px;
-    margin: auto;
+    transform: translateX(140px);
 }
 .apod-card{
     background-color: rgba(0, 0, 0, 0.5);

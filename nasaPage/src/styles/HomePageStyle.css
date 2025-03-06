@@ -1,7 +1,7 @@
 .circle-container{
     width: 100%;
     min-height: 100vh;
-    position: relative;
+    position: absolute;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -171,6 +171,9 @@
     height: 200px;
   }
 }
+  .home-page{
+    height: 100vh;
+  }
   .home-page-content{
     display: flex;
     align-items: center; 
