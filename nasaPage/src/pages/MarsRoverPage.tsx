@@ -9,12 +9,21 @@ import {handlerFilterChange} from '../types/handleFilterChange';
 interface MarsRoverData {
     id: number;
     img_src: string;
+    camera: {
+        name: string;
+    };
+    rover: {
+        name: string;
+    };
 }
 
 export const MarsRoverPage = () => {
     const currentLocation = useLocation();
     const [page,setPage] = useState(1);
     const [photos, setPhotos] = useState<MarsRoverData[]>([]);
+    const [filteredPhotos, setFilteredPhotos] = useState<MarsRoverData[]>([]);
+    const [selectedRover, setSelectedRover] = useState<string>('Default');
+    const [selectedCamera, setSelectedCamera] = useState<string>('Default');
 
     useEffect(() => {
         const pageLocationsWithScroll=["/apod", "/mars-rover", "/neo", "/earth-imagery"];
@@ -30,9 +39,38 @@ export const MarsRoverPage = () => {
             const fetchData = async () => {
                 const data = await getMarsRoverData(page);
                 setPhotos(data); 
+                setFilteredPhotos(data);
             };
             fetchData();
         }, [page]);
+
+        useEffect(() => {
+            let filtered = photos;
+        
+            if (selectedRover !== 'Default') {
+                filtered = filtered.filter((photo) => photo.rover.name === selectedRover);
+            }
+            
+            if (selectedCamera !== 'Default') {
+                filtered = filtered.filter((photo) => photo.camera.name === selectedCamera);
+            }
+            
+            setFilteredPhotos(filtered);
+            console.log(selectedCamera, selectedRover);
+        }, [selectedRover, selectedCamera,photos]);
+
+        const handleFilterSelection = (e: React.ChangeEvent<HTMLSelectElement>) => {
+            const selectedFilter = e.target.value;
+    
+            if (selectedFilter === 'Default') {
+                setSelectedRover('Default');
+                setSelectedCamera('Default');
+            } else if (selectedFilter === 'Camera') {
+                setSelectedRover('Default'); 
+            } else if (selectedFilter === 'Rover') {
+                setSelectedCamera('Default');
+            }
+        };
 
         useEffect(() => {
             handlerFilterChange(); 
@@ -49,17 +87,23 @@ export const MarsRoverPage = () => {
             </div>
             <nav>
                 <span>Sort</span>
-                <select id="select-filter" onChange={handlerFilterChange}>
+                <select id="select-filter" onChange={handleFilterSelection}>
                     <option value="Default">Default</option>
                     <option value="Camera">Camera</option>
                     <option value="Rover">Rover</option>
                 </select>
-                <select  id="rover-dropdown" className='hidden'>
+                <select
+                    id="rover-dropdown" 
+                    className='hidden' 
+                    onChange={(e) => setSelectedRover(e.target.value)}>
                    <option value="Curiosity">Curiosity</option>
                    <option value="Opportunity">Opportunity</option>
                    <option value="Spirit">Spirit</option>
                 </select>
-                <select id="camera-dropdown" className='hidden'>
+                <select 
+                    id="camera-dropdown" 
+                    className='hidden' 
+                    onChange={(e) => setSelectedCamera(e.target.value)}>
                     <option value="FHAZ">FHAZ</option>
                     <option value="RHAZ">RHAZ</option>
                     <option value="MAST">MAST</option>
@@ -74,7 +118,8 @@ export const MarsRoverPage = () => {
             </nav>
             <div className="mars-page-content">
                 <div className='mars-rover-list'>
-                    {photos.map((data)=>(
+                    {filteredPhotos.length === 0 && <h1 className='no-photos'>No Photos Found</h1>}
+                    {filteredPhotos.map((data)=>(
                         <MarsRover
                             key={data.id}
                             id={data.id}
@@ -90,4 +135,4 @@ export const MarsRoverPage = () => {
            
         </div>
     )
-}//risi dizajn s link i dodaj ove filtere
+}

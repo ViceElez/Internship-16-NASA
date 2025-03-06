@@ -1,5 +1,6 @@
 .mars-page{
     width: 100%;
+    min-height: 100vh;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -121,6 +122,12 @@ select:hover{
 
 .mars-rover-link{
     margin: auto;
+}
+.layout-container-dark .no-photos{
+    color: white;
+}
+.layout-container-light .no-photos{
+    color: black;
 }
 
 
