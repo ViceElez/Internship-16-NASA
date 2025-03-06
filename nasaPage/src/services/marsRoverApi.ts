@@ -10,6 +10,7 @@ export async function getMarsRoverData(page:number) {
             throw new Error('Failed to fetch data');
         }
         const data = await response.json();
+        localStorage.setItem('marsRoverData', JSON.stringify(data.photos));
         return data.photos;
 
     }catch(error){

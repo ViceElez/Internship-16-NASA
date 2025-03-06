@@ -97,5 +97,5 @@ export const APODPage = () => {
        </div>
     );
 }; //neki loader dodat za ovo fethcanje jer ako odma iden na apod 
-// pise no data 
+// pise no data, al i za ostale uvedi neki 2 sec loader
 //infinite scroll

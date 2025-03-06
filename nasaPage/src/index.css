@@ -7,6 +7,7 @@
 @import url('./styles/NEOPageStlye.css');
 @import url('./styles/EarthImageryPageStyle.css');
 @import url('./styles/ApodDetailPageStyle.css');
+@import url('./styles/MarsRoverDetailPageStyle.css');
 
 :root{
     font-family: 'Poppins', sans-serif;

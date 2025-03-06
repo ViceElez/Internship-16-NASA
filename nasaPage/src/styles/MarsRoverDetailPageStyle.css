@@ -1,0 +1,39 @@
+.mars-rover-detail-container{
+    display: flex;
+    width: 80%;
+    min-height: 90vh;
+    margin: auto;
+    position: relative;
+    margin-top: 40px;
+    z-index: 2;
+}
+.mars-rover-detail-image{
+    width: 50%;
+}
+.mars-rover-detail-info{
+    width: 50%;
+    padding: 20px;
+    font-size: 1.2rem;
+    text-align: center;
+    align-self: flex-start;
+    margin-top: 50px;
+}
+
+.mars-rover-detail-image img{
+    width:75%;
+    max-height: 400px;
+    display: block;
+    margin: auto;
+    margin-top: 20px;
+}
+.mars-rover-detail-image h6{
+    font-size: 0.8rem;
+    text-align: center;
+    margin-top: 10px;
+}
+.layout-container-dark .mars-rover-detail-container{
+    color: white;
+}
+.layout-container-light .mars-rover-detail-container{
+    color: black;
+}
