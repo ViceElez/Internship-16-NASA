@@ -3,9 +3,34 @@
     min-height: 100vh;
     position: relative;
     display: flex;
-    overflow: hidden;
+    flex-direction: column;
+    justify-content: center;
+}
+.leaflet-container{
+    z-index: 2;
+    height: 90vh;
+    width: 80%;
+    margin: auto;
+    border-radius: 10px;
+}
+.coordinates{
+    text-align: center;
+    z-index: 2;
+}
+.layout-container-dark .coordinates{
+    color: white;
+}
+.layout-container-light .coordinates{
+    color: black;
+}
+.layout-container-dark .leaflet-container .leaflet-control-zoom-in,
+.layout-container-dark .leaflet-container .leaflet-control-zoom-out {
+    background-color: rgba(47, 46, 46, 0.5);
+    color: white;
 }
 
-.earth-page-info{
-    color: white;
+.layout-container-light .leaflet-container .leaflet-control-zoom-in,
+.layout-container-light .leaflet-container .leaflet-control-zoom-out {
+    background-color: rgba(255, 255, 255, 0.5);
+    color: black;
 }
