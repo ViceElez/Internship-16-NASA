@@ -2,10 +2,12 @@ import { useLocation } from "react-router-dom";
 import "../index.css";
 import { useEffect, useState } from "react";
 import { MapContainer, TileLayer,useMapEvents,Marker  } from "react-leaflet";
-import { Icon, LatLngExpression } from "leaflet";
+import { Icon, LatLngExpression, DivIcon, point } from "leaflet";
 import 'leaflet/dist/leaflet.css';
 import {getEarthImagery} from "../services/index";
 import markerIcon from "../assets/images/marker.png";
+import MarkerClusterGroup from "react-leaflet-cluster";
+import Modal from "../components/Modal";
 
 
 const ClickableMap = ({ onLocationSelect }: { onLocationSelect: (location: { lat: number, lng: number }) => void }) => {
@@ -22,31 +24,22 @@ export const EarthImageryPage = () => {
     const currentLocation = useLocation();
     const [selectedCoords, setSelectedCoords] = useState<{ lat: number, lng: number } | null>(null);
     const [imageUrl, setImageUrl] = useState<string | null>(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [favorites, setFavorites] = useState<{ lat: number, lng: number }[]>([]);
 
-
-    const markers=[
-        {
-            lat:51.505,
-            lng:-0.09
-        },
-        {
-            lat:51.505,
-            lng:-0.08
-        },
-        {
-            lat:51.505,
-            lng:-0.07
-        },
-        {
-            lat:51.505,
-            lng:-0.06
-        }
-    ]
 
     const customIcon=new Icon({
         iconUrl:markerIcon,
         iconSize:[38,38]
     })
+
+    const createCustomClusterIcon = function (cluster: any) {
+        return new DivIcon({
+            html: `<div class="custom-cluster-icon">${cluster.getChildCount()}</div>`,
+            className: "custom-cluster-icon",
+            iconSize: point(33, 33,true)
+        });
+    };
 
     useEffect(() => {
         const pageLocationsWithScroll = [
@@ -62,9 +55,34 @@ export const EarthImageryPage = () => {
             document.body.style.overflow = "hidden";
         }
     }, [currentLocation]);
-    
-    const fetchedImageUrl=getEarthImagery(selectedCoords?.lat || 0, selectedCoords?.lng || 0);
-    console.log(fetchedImageUrl);
+
+    useEffect(() => {
+        if (selectedCoords) {
+            const fetchImage = async () => {
+                try {
+                    const fetchedImageUrl = await getEarthImagery(selectedCoords.lat, selectedCoords.lng);
+                    if (fetchedImageUrl) {
+                        setImageUrl(fetchedImageUrl);
+                        setIsModalOpen(true);
+                    } else {
+                        setImageUrl(null);
+                        alert("No image found for the selected coordinates");
+                    }
+                } catch (error) {
+                    console.error("Error fetching satellite image:", error);
+                }
+            };
+
+            fetchImage();
+        }
+    }, [selectedCoords]);
+
+    useEffect(() => {
+        const favorites = localStorage.getItem("favorites")
+          ? JSON.parse(localStorage.getItem("favorites") || "[]")
+          : [];
+        setFavorites(favorites);
+      }, []);
     
 
     const center: LatLngExpression = [51.505, -0.09];
@@ -80,18 +98,28 @@ export const EarthImageryPage = () => {
             >
                 <TileLayer  
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+
                 <ClickableMap onLocationSelect={setSelectedCoords} />
-                {markers.map(marker=>(
-                    <Marker position={[marker.lat,marker.lng]} 
-                    icon={customIcon}/>
-                ))}
+                <MarkerClusterGroup
+                    key={selectedCoords?.lat}
+                    chunkedLoading
+                    iconCreateFunction={createCustomClusterIcon}
+                >
+                    {favorites.map((marker: { lat: number, lng: number }) => (
+                        <Marker 
+                        key={`${marker.lat}-${marker.lng}`}
+                        position={[marker.lat, marker.lng]} 
+                        icon={customIcon}/>
+                    ))}
+                </MarkerClusterGroup>
             </MapContainer>
-              {imageUrl && (
-                <div style={{ marginTop: "20px" }}>
-                    <h2>Satellite Image</h2>
-                    <img src={imageUrl} alt="Satellite View" style={{ width: "100%", maxWidth: "600px", borderRadius: "10px" }} />
-                </div>
-            )}
+            <Modal 
+               imageUrl={imageUrl}
+               isOpen={isModalOpen}
+               closeModal={() => setIsModalOpen(false)}
+               lat={selectedCoords?.lat ?? null}
+               lng={selectedCoords?.lng ?? null}
+               setFavorites={setFavorites}/>
             <div className="circle-container">
                 <div className="circle circle-1"></div>
                 <div className="circle circle-2"></div>

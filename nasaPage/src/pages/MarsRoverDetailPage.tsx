@@ -15,7 +15,7 @@ export const MarsRoverDetailPage = () => {
     }, [currentLocation]);
 
     return (
-        <>  
+        <div className="mars-rover-detail-page">  
             <div className="mars-rover-detail-container">
                 <div className="mars-rover-detail-image">
                     <img src={marsRover.img_src} alt={marsRover.rover.name} />
@@ -36,6 +36,6 @@ export const MarsRoverDetailPage = () => {
                 <div className='circle circle-3'></div>
                 <div className='circle circle-4'></div>
             </div>
-        </>
+        </div>
     );
 } //ako uvatis malo dizajn poboljsat

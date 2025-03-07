@@ -1,7 +1,10 @@
+.mars-rover-detail-page{
+    min-height: 90vh;
+}
 .mars-rover-detail-container{
     display: flex;
     width: 80%;
-    min-height: 90vh;
+    height: auto;
     margin: auto;
     position: relative;
     margin-top: 40px;
@@ -9,6 +12,7 @@
 }
 .mars-rover-detail-image{
     width: 50%;
+    align-self: center;
 }
 .mars-rover-detail-info{
     width: 50%;
@@ -16,7 +20,7 @@
     font-size: 1.2rem;
     text-align: center;
     align-self: flex-start;
-    margin-top: 50px;
+    margin-top: 20px;
 }
 
 .mars-rover-detail-image img{

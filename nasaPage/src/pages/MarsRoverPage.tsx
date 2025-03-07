@@ -56,7 +56,6 @@ export const MarsRoverPage = () => {
             }
             
             setFilteredPhotos(filtered);
-            console.log(selectedCamera, selectedRover);
         }, [selectedRover, selectedCamera,photos]);
 
         const handleFilterSelection = (e: React.ChangeEvent<HTMLSelectElement>) => {
