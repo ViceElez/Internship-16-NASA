@@ -45,8 +45,7 @@ export const EarthImageryPage = () => {
         const pageLocationsWithScroll = [
             "/apod",
             "/mars-rover",
-            "/neo",
-            "/earth-imagery",
+            "/neo"
         ];
 
         if (pageLocationsWithScroll.includes(currentLocation.pathname)) {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import '../index.css';
 
 interface ModalProps {
@@ -40,6 +40,8 @@ export default function Modal({
     alert("Favorite added");
     closeModal();
   };
+  
+
 
   return (
     <div className="modal">
