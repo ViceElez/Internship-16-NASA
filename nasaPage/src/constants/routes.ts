@@ -9,5 +9,6 @@ export const routes:Routes={
     NEO: '/neo',
     EARTH_IMAGERY: '/earth-imagery',
     APOD_DETAILS: '/apod-details/:date',
-    MARS_ROVER_DETAILS: '/mars-rover-details/:id'
+    MARS_ROVER_DETAILS: '/mars-rover-details/:id',
+    NO_PAGE_FOUND: '*'
 }

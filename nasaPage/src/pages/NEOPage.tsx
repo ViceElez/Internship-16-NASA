@@ -3,13 +3,17 @@ import '../index.css';
 import { getNeoData } from '../services/index';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
+import { PieChart, Pie, Cell, ResponsiveContainer, ScatterChart, CartesianGrid, XAxis, Tooltip, YAxis, Scatter } from 'recharts';
+import { useLocation } from 'react-router';
+import { div } from 'framer-motion/client';
+import { transform } from 'framer-motion';
 
 
 type CalendarValue = Date | null | [Date | null, Date | null];
 
 export const NEOPage = () => {
-    const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([new Date(), new Date()]);
+    const currentLocation = useLocation();
+    const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([null,null]);
     const [hasSelectedDate, setHasSelectedDate] = useState(false);  
     const [neoData, setNeoData] = useState<any[]>([]);
 
@@ -19,6 +23,13 @@ export const NEOPage = () => {
             setHasSelectedDate(true); 
         } 
     };
+
+    const renderLabel = (entry: any) => `${entry.name}: ${entry.value}`;
+
+    useEffect(() => {
+        const pageLocationsWithScroll = ["/apod", "/mars-rover", "/neo", "/earth-imagery"];
+        document.body.style.overflow = pageLocationsWithScroll.includes(currentLocation.pathname) ? "auto" : "hidden";
+    }, [currentLocation]);
 
     useEffect(() => {
         if(!hasSelectedDate) return;
@@ -59,12 +70,28 @@ export const NEOPage = () => {
     const hazardousData = neoData.filter((neo: any) => neo.is_potentially_hazardous_asteroid);
     const nonHazardousData = neoData.length - hazardousData.length;
 
-    const chartData = [
+    const sentryData= neoData.filter((neo: any) => neo.is_sentry_object);
+    const nonSentryData = neoData.length - sentryData.length;
+
+    const chartDistanceSpeedData = neoData.map((neo: any) => ({ x:neo.close_approach_data[0].relative_velocity.kilometers_per_hour , y: neo.close_approach_data[0]. miss_distance.kilometers }));
+
+    const minX = parseFloat(Math.min(...chartDistanceSpeedData.map(d => d.x)).toFixed(2));
+    const maxX = parseFloat(Math.max(...chartDistanceSpeedData.map(d => d.x)).toFixed(2));
+    const minY = parseFloat(Math.min(...chartDistanceSpeedData.map(d => d.y)).toFixed(2));
+    const maxY = parseFloat(Math.max(...chartDistanceSpeedData.map(d => d.y)).toFixed(2));
+
+
+    const chartHazardousData = [
         { name: "Hazardous", value: hazardousData.length },
         { name: "Non-Hazardous", value: nonHazardousData }
     ];
 
-    const COLORS = ["#FF5733", "#28A745"];
+    const chartSentryData=[
+        { name: "Sentry", value: sentryData.length },
+        { name: "Non-Sentry", value: nonSentryData }
+    ]
+
+    const COLORS = ["#FF0000", "#0000FF"];
 
     return (
         <div className="neo-page">
@@ -77,30 +104,97 @@ export const NEOPage = () => {
                     className={'neo-page-calendar-component'}
                 />
             </div>
-            <br/>
-            {neoData && neoData.length > 0 && (
+            <h2 >Date Picked:{dateRange[0]?.toDateString()}-{dateRange[1]?.toDateString()}</h2>
             <div className='neo-page-chart'>
-                <h3>Hazardous vs Non-Hazardous</h3>
-                <ResponsiveContainer width={400} height={400}>
-                    <PieChart>
-                        <Pie
-                            data={chartData}
-                            dataKey="value"
-                            nameKey="name"
-                            cx="50%"
-                            cy="50%"
-                            outerRadius={120}
-                            fill="#8884d8"
-                            label
-                        >
-                            {chartData.map((entry, index) => (
-                                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                            ))}
-                        </Pie>
-                    </PieChart>
-                </ResponsiveContainer>
-            </div>
+            {neoData && neoData.length > 0 && (
+                
+                <div className='neo-page-chart-child'>
+                    <h3>Hazardous vs Non-Hazardous</h3>
+                    <ResponsiveContainer width="80%" height={400}>
+                        <PieChart>
+                            <Pie
+                                data={chartHazardousData}
+                                dataKey="value"
+                                nameKey="name"
+                                cx="50%"
+                                cy="50%"
+                                outerRadius={120}
+                                fill="#8884d8"
+                                label={renderLabel}
+                                className='neo-page-pie'
+                            >
+                                {chartHazardousData.map((entry, index) => (
+                                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]}
+                                    />
+                                ))}
+                            </Pie>
+                        </PieChart>
+                    </ResponsiveContainer>
+                </div>
             )}
+
+                {neoData && neoData.length > 0 && (
+                <div className='neo-page-chart-child'>
+                    <h3>Sentry vs Non-Sentry</h3>
+                    <ResponsiveContainer width="80%" height={400}>
+                        <PieChart>
+                            <Pie
+                                data={chartSentryData}
+                                dataKey="value"
+                                nameKey="name"
+                                cx="50%"
+                                cy="50%"
+                                outerRadius={120}
+                                fill="#8884d8"
+                                label={renderLabel}
+                                className='neo-page-pie'
+                            >
+                                {chartSentryData.map((entry, index) => (
+                                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]}
+                                    />
+                                ))}
+                            </Pie>
+                        </PieChart>
+                    </ResponsiveContainer>
+                </div>
+            )}
+
+                {neoData && neoData.length > 0 && (
+                    <div className='neo-page-chart-child'>
+                        <h3 style={{ transform: 'translateY(20px)' }}>Distance and Speed</h3>
+                     <ResponsiveContainer width="100%" height={400}>
+                        <ScatterChart
+                            margin={{
+                                top: 20,
+                                right: 100,
+                                bottom: 20,
+                                left: 100,   
+                            }}
+                            >
+                            <CartesianGrid />
+                            <XAxis 
+                            type="number" 
+                            dataKey="x" 
+                            name="velocity" 
+                            unit="km/h" 
+                            domain={[minX * 0.9, maxX * 1.1]} 
+                            tickFormatter={(value) => value.toFixed(2)} 
+                            />
+                            <YAxis 
+                            type="number"
+                            dataKey="y" 
+                            name="distance" 
+                            unit="km"  
+                            domain={[minY * 0.9, maxY * 1.1]}
+                            tickFormatter={(value) => value.toFixed(2)} 
+                            />
+                            <Tooltip cursor={{ strokeDasharray: '3 3' }} />
+                            <Scatter name="A school" data={chartDistanceSpeedData} fill="#8884d8" />
+                        </ScatterChart>
+                     </ResponsiveContainer>
+                    </div>
+                )}
+            </div>
         
             <div className="circle-container">
                 <div className='circle circle-1'></div>
@@ -111,4 +205,3 @@ export const NEOPage = () => {
         </div>
     );
 };
-// da se vidi koja boja ja sta
