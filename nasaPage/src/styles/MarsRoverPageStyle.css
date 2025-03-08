@@ -129,6 +129,16 @@ select:hover{
 .layout-container-light .no-photos{
     color: black;
 }
+.layout-container-dark .loader{
+    z-index: 2;
+    text-align: center;
+    color: white;
+}
+.layout-container-light .loader{
+    z-index: 2;
+    text-align: center;
+    color: black;
+}
 
 
 
