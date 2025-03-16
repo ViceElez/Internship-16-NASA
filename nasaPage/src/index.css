@@ -10,6 +10,7 @@
 @import url('./styles/MarsRoverDetailPageStyle.css');
 @import url('./styles/ModalStyle.css');
 @import url('./styles/ErrorPageStyle.css');
+@import url('./styles/LoaderStyle.css');
 
 :root{
     font-family: 'Poppins', sans-serif;

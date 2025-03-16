@@ -3,3 +3,4 @@ export * from './APOD';
 export * from './ScrollToTop';
 export * from './MarsRover';
 export * from './Modal';
+export * from './Loader';

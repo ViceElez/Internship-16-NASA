@@ -2,8 +2,9 @@ import { useLocation } from 'react-router-dom';
 import '../index.css';
 import { useEffect, useState } from 'react';
 import '../styles/ApodPageStyle.css';
-import { getAPODData } from '../services/index';
+import { getAPODData,getAdditionalAPODData } from '../services/index';
 import { APOD } from '../components/index';
+import {Loader} from '../components/index';
 
 interface ApodData {
     copyright?: string;
@@ -18,6 +19,8 @@ export const APODPage = () => {
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
     const [filteredData, setFilteredData] = useState<ApodData[]>([]);
+    const [items, setItem] = useState(7);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const pageLocationsWithScroll = ["/apod", "/mars-rover", "/neo", "/earth-imagery"];
@@ -29,15 +32,51 @@ export const APODPage = () => {
     }, []);
 
     useEffect(() => {
-        const storedData: ApodData[] = JSON.parse(localStorage.getItem('apodData') || '[]');
+        window.addEventListener('scroll', handleScroll);
         
-        const filtered = storedData.filter((data) => {
-            const dataDate = new Date(data.date).toISOString().split('T')[0]; 
+        return()=>{
+            window.removeEventListener('scroll', handleScroll);
+        }
+    }, []);
+    
+    const handleScroll = () => {
+        if (window.innerHeight + document.documentElement.scrollTop+1 >= document.documentElement.offsetHeight) {
+            setLoading(true);   
+            setItem(prevItems => {
+                const newItems = prevItems + 7;
+                getAdditionalAPODData(newItems); 
+                return newItems;
+            });
+        }
+    };
+
+    useEffect(() => {
+        let storedData = localStorage.getItem('apodData');
+    
+        if (!storedData) {
+            storedData = '[]'; 
+        }
+    
+        let parsedData;
+        try {
+            parsedData = JSON.parse(storedData);
+            if (!Array.isArray(parsedData)) {
+                parsedData = [parsedData];
+            }
+        } catch (error) {
+            console.error("Error parsing APOD data:", error);
+            parsedData = []; 
+        }
+    
+        const filtered = parsedData.filter((data: ApodData) => {
+            const dataDate = new Date(data.date).toISOString().split('T')[0];
             return (!startDate || dataDate >= startDate) && (!endDate || dataDate <= endDate);
         });
-
+    
         setFilteredData(filtered);
-    }, [startDate, endDate]);
+        setLoading(false);
+    }, [startDate, endDate, items]); 
+    
 
     const handleStartDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const newStartDate = e.target.value;
@@ -56,6 +95,9 @@ export const APODPage = () => {
             setStartDate(newEndDate);
         }
     };
+
+    const uniqueFilteredData = Array.from(new Map(filteredData.map(item => [item.date, item])).values());
+
 
     return (
        <div className="apod-page-content">
@@ -83,9 +125,9 @@ export const APODPage = () => {
                 max={new Date().toISOString().split('T')[0]}  
                 onChange={handleEndDateChange} />
             </div>
-            {filteredData.length === 0 && <p className='no-data'>No APOD found</p>}
+            {uniqueFilteredData.length === 0 && <p className='no-data'>No APOD found</p>}
             <div className='apod-container'>
-                {filteredData.map((data) => (
+                {uniqueFilteredData.map((data) => (
                     <APOD 
                         key={data.date} 
                         date={data.date}
@@ -94,8 +136,7 @@ export const APODPage = () => {
                     />
                 ))}
             </div>
+            {loading && <Loader/>}
        </div>
     );
-}; //neki loader dodat za ovo fethcanje jer ako odma iden na apod 
-// pise no data, al i za ostale uvedi neki 2 sec loader
-//infinite scroll
+}; 
